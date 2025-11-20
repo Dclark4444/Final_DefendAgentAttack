@@ -1,0 +1,8 @@
+source;share/AttackDefend_interfaces/hook/cmake_prefix_path.ps1
+source;share/AttackDefend_interfaces/hook/cmake_prefix_path.dsv
+source;share/AttackDefend_interfaces/hook/cmake_prefix_path.sh
+source;share/AttackDefend_interfaces/local_setup.bash
+source;share/AttackDefend_interfaces/local_setup.dsv
+source;share/AttackDefend_interfaces/local_setup.ps1
+source;share/AttackDefend_interfaces/local_setup.sh
+source;share/AttackDefend_interfaces/local_setup.zsh

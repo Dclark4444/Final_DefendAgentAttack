@@ -1,0 +1,24 @@
+running develop
+running egg_info
+creating DefendAgentAttack.egg-info
+writing DefendAgentAttack.egg-info/PKG-INFO
+writing dependency_links to DefendAgentAttack.egg-info/dependency_links.txt
+writing entry points to DefendAgentAttack.egg-info/entry_points.txt
+writing requirements to DefendAgentAttack.egg-info/requires.txt
+writing top-level names to DefendAgentAttack.egg-info/top_level.txt
+writing manifest file 'DefendAgentAttack.egg-info/SOURCES.txt'
+reading manifest file 'DefendAgentAttack.egg-info/SOURCES.txt'
+writing manifest file 'DefendAgentAttack.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/install/DefendAgentAttack/lib/python3.10/site-packages/DefendAgentAttack.egg-link (link to .)
+Installing fight-now script to /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/install/DefendAgentAttack/lib/DefendAgentAttack
+Installing multi-agent script to /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/install/DefendAgentAttack/lib/DefendAgentAttack
+Installing reward-simulator script to /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/install/DefendAgentAttack/lib/DefendAgentAttack
+
+Installed /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/build/DefendAgentAttack
+running symlink_data
+creating /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/install/DefendAgentAttack/share/ament_index
+creating /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/install/DefendAgentAttack/share/ament_index/resource_index
+creating /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/install/DefendAgentAttack/share/ament_index/resource_index/packages
+symbolically linking /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/build/DefendAgentAttack/resource/DefendAgentAttack -> /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/install/DefendAgentAttack/share/ament_index/resource_index/packages
+symbolically linking /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/build/DefendAgentAttack/package.xml -> /home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/install/DefendAgentAttack/share/DefendAgentAttack

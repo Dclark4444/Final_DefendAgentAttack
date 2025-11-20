@@ -1,0 +1,9 @@
+source;share/DefendAgentAttack/hook/pythonpath.ps1
+source;share/DefendAgentAttack/hook/pythonpath.dsv
+source;share/DefendAgentAttack/hook/pythonpath.sh
+source;share/DefendAgentAttack/hook/ament_prefix_path.ps1
+source;share/DefendAgentAttack/hook/ament_prefix_path.dsv
+source;share/DefendAgentAttack/hook/ament_prefix_path.sh
+source;../../build/DefendAgentAttack/share/DefendAgentAttack/hook/pythonpath_develop.ps1
+source;../../build/DefendAgentAttack/share/DefendAgentAttack/hook/pythonpath_develop.dsv
+source;../../build/DefendAgentAttack/share/DefendAgentAttack/hook/pythonpath_develop.sh
