@@ -1,4 +1,0 @@
-source;share/AttackDefend_interfaces/local_setup.bash
-source;share/AttackDefend_interfaces/local_setup.dsv
-source;share/AttackDefend_interfaces/local_setup.sh
-source;share/AttackDefend_interfaces/local_setup.zsh

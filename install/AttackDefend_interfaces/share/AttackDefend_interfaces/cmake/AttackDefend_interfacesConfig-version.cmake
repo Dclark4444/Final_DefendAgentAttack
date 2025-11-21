@@ -1,1 +1,0 @@
-/home/hanimn/intro_robo_ws/src/Final_DefendAgentAttack/build/AttackDefend_interfaces/ament_cmake_core/AttackDefend_interfacesConfig-version.cmake

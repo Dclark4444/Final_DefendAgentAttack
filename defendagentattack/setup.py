@@ -2,7 +2,7 @@ import os
 from glob import glob 
 from setuptools import find_packages, setup
 
-package_name = 'DefendAgentAttack'
+package_name = 'defendagentattack'
 
 setup(
     name=package_name,
@@ -22,9 +22,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'reward-simulator = DefendAgentAttack.reward_simlator', 
-            'multi-agent = DefendAgentAttack.multiagent.py',
-            'fight-now = DefendAgentAttack.fightnow.py '
+            'reward-simulator = defendagentattack.reward_simlator', 
+            'multi-agent = defendagentattack.multiagent.py',
+            'fight-now = defendagentattack.fightnow.py '
         ],
     },
 )
