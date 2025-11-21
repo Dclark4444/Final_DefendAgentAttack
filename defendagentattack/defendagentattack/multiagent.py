@@ -1,5 +1,6 @@
 import os
 import rclpy
+import sys
 from rclpy.node import Node
 from ament_index_python.packages import get_package_share_directory, PackageNotFoundError
 
@@ -9,6 +10,7 @@ import random
 from AttackDefend_interfaces.msg import Reward, Action 
 from rclpy.qos import qos_profile_sensor_data
 import time 
+
 
 class ReinforceLearn(Node):
     def __init__(self):
@@ -65,9 +67,6 @@ class ReinforceLearn(Node):
         self.action_pub.publish(curr_action)
 
 
-
-
-
     def reward_callback(self, msg:Reward):
         """ calls an algorithm again after processing the reward """
 
@@ -85,8 +84,10 @@ class ReinforceLearn(Node):
         rclpy.shutdown()
 
 
+
 def main(args=None):
     rclpy.init(args=args)
+    player = sys.argv[1:] # Attack (A), Defend (D)
     node = ReinforceLearn()
     try:
         rclpy.spin(node)

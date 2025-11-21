@@ -1,4 +1,5 @@
 import rclpy
+import sys
 from rclpy.node import Node
 import time
 
@@ -16,7 +17,7 @@ from omx_cpp_interface.msg import ArmGripperPosition, ArmJointAngles
 
 
 class ExecuteOptimal(Node):
-    def __init__(self):
+    def __init__(self, player):
         super().__init__('execute_optimal_policy')
         # getting shared directory to be able to access q_matrix
 
@@ -111,6 +112,21 @@ class ExecuteOptimal(Node):
 
 
 
+def main(args=None):
+    rclpy.init(args=args)
+    player = sys.argv[1:] # Attack (A), Defend (D)
+    node = ExecuteOptimal(player)
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
 
 
 
