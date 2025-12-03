@@ -1,5 +1,4 @@
 import rclpy
-import sys
 from rclpy.node import Node
 import time
 
@@ -17,7 +16,7 @@ from omx_cpp_interface.msg import ArmGripperPosition, ArmJointAngles
 
 
 class ExecuteOptimal(Node):
-    def __init__(self, player):
+    def __init__(self):
         super().__init__('execute_optimal_policy')
         # getting shared directory to be able to access q_matrix
 
@@ -35,25 +34,23 @@ class ExecuteOptimal(Node):
 
 
          # Fetch Actions and states (saved files)
-         # Joint action --> [Attack, Defender]
-         # Attack Agent can Move_R/L (0,1), arm down in direction of move (2)
-         # Defend Agent can Turn to Face (0), arm_back_right/left (1,2) 
         action_pth = os.path.join(self.share, 'matrices', 'action.txt')
         self.actions = np.loadtxt(action_pth)
 
 
-        # Atack agent states are indicies 0-1 and Defend are 2-3 
-        # index 0 represents the Attack Agent stance relative to Defense
-        # ==> 0 - in front, 1 - to the Right, 2 - to the left 
-        # index 1 represens the A Agent arm up (0), or down (1)
-        # index 2 represents the D Agent stance relative to Defense
-        # ===> forward facing (0), not seeing (1)
-        # index 3 represents the D Agent Arm position 
-        # ==> home/up (0), arm_down_right (1), arm_down_left (2)
+
+
+        # Attack and Defend Agents have the same types of actions 
+        # [0, 1,  2, 3, 4]
+        # 0 - home pose - facing the robot and arm is up 
+        # 1 - Attack Moves to the Left (not facing Def), Defense Rotates 90 degrees to the Right 
+        # 2 - Attack moves to the Right (not facing Def), Defense rotates 90 degrees to the left 
+        # 3 - Attack Moves arm down right, Defense shields right 
+        # 4 - Attack Moves arm down left, Defense shields Left
         state_pth = os.path.join(self.share, 'matrices', 'states.txt')
         self.states = np.loadtxt(state_pth)
 
-
+        
 
         matrix_path = os.path.join(self.share, 'matrices', 'RL_matrix.txt')
         self.q_matrix = np.loadtxt(matrix_path) # np array of q_matrix 
@@ -97,36 +94,15 @@ class ExecuteOptimal(Node):
         
         
         time.sleep(2)
-
-
-        # Wait until 2 robots are running this file
-
-
         self.perform_action()
 
 
 
-    def send_join_info():
-        None
+    def send_join_info()
 
 
 
 
-def main(args=None):
-    rclpy.init(args=args)
-    player = sys.argv[1:] # Attack (A), Defend (D)
-    node = ExecuteOptimal(player)
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        node.destroy_node()
-        rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
 
 
 
