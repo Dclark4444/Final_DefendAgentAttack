@@ -34,9 +34,10 @@ class ExecuteOptimal(Node):
         self.get_logger().info(f'ROS_DOMAIN_ID: {ros_domain_id}')   
 
 
+
          # Fetch Actions and states (saved files)
          # Joint action --> [Attack, Defender]
-         # Attack Agent can Move_R/L (0,1), arm down in direction of move (2)
+         # Attack Agent can Face/Turn to face opponent (0). Move_R/L (1,2), arm down in direction of move (3)
          # Defend Agent can Turn to Face (0), arm_back_right/left (1,2) 
         action_pth = os.path.join(self.share, 'matrices', 'action.txt')
         self.actions = np.loadtxt(action_pth)
