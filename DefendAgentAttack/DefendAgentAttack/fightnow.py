@@ -39,6 +39,9 @@ class ExecuteOptimal(Node):
         self.player_idx = None
         self.player_exp_actions = {"attack": ["home","M_R","M_L","arm"],
                               "defend" : ["home", "A_R", "A_L"]}
+        
+        self.start_time = None
+
     
         self.step = "Accessing"
         
@@ -129,23 +132,20 @@ class ExecuteOptimal(Node):
     def perform_action(self, action): 
         # Execution Lock of action until new state is achieved ==> hypothesized to take 3 seconds 
  
-        try: 
-            MIN_RUN_TIME = 3.5 
-            start_time = self.get_clock().now
-            self.move_robot( action)
-            time.sleep(0.5)
+        MIN_RUN_TIME = 3.5 
+
+        if self.start_time != None: 
+            self.start_time = self.get_clock().now()
+        self.move_robot( action)
+
             
-            elapsed = (self.get_clock().now() - start_time).nanoseconds / 1e9
-            time_to_sleep = MIN_RUN_TIME - elapsed
+        elapsed = (self.get_clock().now() - self.start_time).nanoseconds / 1e9
 
-            if time_to_sleep > 0: 
-                time.sleep(time_to_sleep)
-                self.get_logger().info("Had too much time to perform action ")
-
-        finally:
-            self.exclusive_lock.release()
+     # first instance of 3.5 second run, go to the next action, after accesing state
+        if elapsed > MIN_RUN_TIME:
             self.get_logger().info("Action have finished performing")
             self.step == "Accessing"
+            self.start_time = None 
 
 
             
@@ -155,7 +155,7 @@ class ExecuteOptimal(Node):
             r_act = action[self.player_idx] # get the specific action 
 
             lat_velocity = 0.25 # R = +, L = - 
-            good_dist = 0.75
+            good_dist =
 
             if r_act == "home":
                 # making sure you are facing the other person 
@@ -203,10 +203,18 @@ class ExecuteOptimal(Node):
         Works while looking for the object or while moving toward it.
         """
 
-        ##
+
+        if self.state == "Accessing":
+            player = self.players[self.player_idx]
 
 
-    
+            # get the player ---> make steps to acess the state of the other robot
+
+        else: 
+            None 
+
+
+
     def scan_callback(self, scan:LaserScan):
         """ Triggered when subscribed to LaserScan, only when going to the desired location, 
         When close enough the location, call the function using_arm. 
@@ -217,8 +225,18 @@ class ExecuteOptimal(Node):
         if self.state == "Moving":
             # when moving i need to make sure im not bumping into seomething 
             None 
+        
+        # when moing, I probably don't need scan ranges? 
+        # --> I think i can account for lateral distance movement
+       
+       
         if self.state == "Accessing": # distinct things looking for based on the states.
             None 
+            #Front facing, TO teh right, to the Left? ===> Uses other robot to define states of another 
+        # class variables are dictionarities accounting for both agents
+
+
+        # update class variables here
 
 
 
