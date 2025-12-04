@@ -24,6 +24,10 @@ def main():
 
     curr_s = states[0]
 
+
+        # self.player_exp_actions = {"attack": ["home","M_R","M_L","arm"],
+        #                       "defend" : ["home", "A_R", "A_L"]}
+
     for curr_idx, next_list in enumerate(state_nstate):# for every row index (represents a state )
         # look at each column item ===> get current 
         curr_state = np.array(states[curr_idx])
