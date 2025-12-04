@@ -21,6 +21,7 @@ class ExecuteOptimal(Node):
         super().__init__('execute_optimal_policy')
         # getting shared directory to be able to access q_matrix
 
+
          # get ROS_DOMAIN_ID
         ros_domain_id = os.getenv("ROS_DOMAIN_ID")
         try:
@@ -33,10 +34,24 @@ class ExecuteOptimal(Node):
 
         self.get_logger().info(f'ROS_DOMAIN_ID: {ros_domain_id}')   
 
+        # Player and policy execution variables
+        self.players = ["Attack", "Defend"]  # None only when it hasnt chosen a player yet
+        self.player_idx = None
+        self.player_exp_actions = {"attack": ["home","M_R","M_L","arm"],
+                              "defend" : ["home", "A_R", "A_L"]}
+        
+        self.start_time = None
+
+    
+        self.step = "Accessing"
+        
+        self.curr_at = None
+        self.past_at = None 
+
 
          # Fetch Actions and states (saved files)
          # Joint action --> [Attack, Defender]
-         # Attack Agent can Move_R/L (0,1), arm down in direction of move (2)
+         # Attack Agent can Face/Turn to face opponent (0). Move_R/L (1,2), arm down in direction of move (3)
          # Defend Agent can Turn to Face (0), arm_back_right/left (1,2) 
         action_pth = os.path.join(self.share, 'matrices', 'action.txt')
         self.actions = np.loadtxt(action_pth)
@@ -95,27 +110,142 @@ class ExecuteOptimal(Node):
         self.scan_sub = self.create_subscription(LaserScan, scan_topic, 
             self.scan_callback,10)
         
+
+
+        timer_period =  0.5
+        self.timer = self.create_timer(timer_period, self.policy_loop)
+        
+        
         
         time.sleep(2)
 
 
-        # Wait until 2 robots are running this file
 
+        self.send_join_info()
+
+        # Wait until 2 robots are running this file
+        # Read file and confirm who's who--- perform an action 
 
         self.perform_action()
 
 
+    def perform_action(self, action): 
+        # Execution Lock of action until new state is achieved ==> hypothesized to take 3 seconds 
+ 
+        MIN_RUN_TIME = 3.5 
+
+        if self.start_time != None: 
+            self.start_time = self.get_clock().now()
+        self.move_robot( action)
+
+            
+        elapsed = (self.get_clock().now() - self.start_time).nanoseconds / 1e9
+
+     # first instance of 3.5 second run, go to the next action, after accesing state
+        if elapsed > MIN_RUN_TIME:
+            self.get_logger().info("Action have finished performing")
+            self.step == "Accessing"
+            self.start_time = None 
+
+
+            
+    def move_robot(self, action):
+        if self.player_idx == 0:  # Attack 
+            # how to do their action 
+            r_act = action[self.player_idx] # get the specific action 
+
+            lat_velocity = 0.25 # R = +, L = - 
+            good_dist =
+
+            if r_act == "home":
+                # making sure you are facing the other person 
+                None
+            
+            if r_act[0] == "M":
+                # moving to teh right or left 
+                if r_act[2] == "R":
+                    None 
+            
+            else: # arm going down 
+                None 
+    
+
+            # get the name of the action 
+        if self.player == 1: # Defend action 
+            r_act = action[self.player_idx]
+            
+            if r_act == "home": # Making sure its facing the other person
+                None
+            
+
+            if r_act[2] == "R": # Turning Right 
+                None 
+
+            else:  # Turning Left
+                None 
+
+
+
 
     def send_join_info():
-        None
+        # if nothing was written then you will be the attack player
+        return 
+    
+
+    def policy_loop(self): # RUns every once in a while, concurrent with scan  and image_callback
+        if self.step == "Moving":      # currently performing action  
+            self.perform_action()
+
+
+
+    def image_callback(self, msg: CompressedImage):
+        """ Process each incoming image and update object centroid continuously.
+        Works while looking for the object or while moving toward it.
+        """
+
+
+        if self.state == "Accessing":
+            player = self.players[self.player_idx]
+
+
+            # get the player ---> make steps to acess the state of the other robot
+
+        else: 
+            None 
+
+
+
+    def scan_callback(self, scan:LaserScan):
+        """ Triggered when subscribed to LaserScan, only when going to the desired location, 
+        When close enough the location, call the function using_arm. 
+        """
+        # self.get_logger().info(f'LaserScanning in scan_callback, and this is state {self.state}')
+        
+        # need to use it when assessing state 
+        if self.state == "Moving":
+            # when moving i need to make sure im not bumping into seomething 
+            None 
+        
+        # when moing, I probably don't need scan ranges? 
+        # --> I think i can account for lateral distance movement
+       
+       
+        if self.state == "Accessing": # distinct things looking for based on the states.
+            None 
+            #Front facing, TO teh right, to the Left? ===> Uses other robot to define states of another 
+        # class variables are dictionarities accounting for both agents
+
+
+        # update class variables here
 
 
 
 
 def main(args=None):
     rclpy.init(args=args)
-    player = sys.argv[1:] # Attack (A), Defend (D)
-    node = ExecuteOptimal(player)
+    # player = sys.argv[1:] # Attack (A), Defend (D)
+    # node = ExecuteOptimal(player)
+    node = ExecuteOptimal()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
